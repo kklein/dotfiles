@@ -1,11 +1,20 @@
-# configs
-Repo for diverse configs.
+Repository for dotiles on Arch Linux system.
 
-The config files remain in their sought-after location. They are symlinked into the folder of the repository. This makes it easier to keep track of what is part of the repository.
+# Usage
+- Clone repository.
+- Per application, create a symlink. Note that the original file should stay in the folder of this repistory - the symlink should exist in the path where the application will seek for the config file. E.g.:
+`ln -nfs \home\kevin\Code\dotfiles\i3 \home\kevin\.config`.
 
-Currently included: 
+# Applications
+- fish
+- i3
+- i3bar
+- xinitrc
 
-- i3 config file
-  actual path: ~/.config/i3/config
-- Xmodmap file (mapping keystrokes at a low level, e.g. used for remapping of caps lock and left alt)
-  ~/.Xmodmap
+# TODO:
+- emacs
+- Visual Studio Code
+
+# Remarks
+Remember that symlinks are great. :) Built-in features like fish's function declaration via `function`, `funced` and `funcsave` follow the link and thereby
+work as intended.
