@@ -9,3 +9,9 @@ end
 # for ssh profies.
 # https://github.com/ivakyb/fish_ssh_agent
 fish_ssh_agent
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+# eval /opt/miniconda3/bin/conda "shell.fish" "hook" $argv | source
+# <<< conda initialize <<<
+
