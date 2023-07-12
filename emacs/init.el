@@ -8,6 +8,7 @@
 
 ;; Dependency management
 (require 'package)
+(require 'use-package)
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
@@ -21,6 +22,7 @@
                       yaml-mode
 		      rst
 		      magit
+		      multiple-cursors
                       ))
 
 (dolist (p my-packages)
@@ -67,10 +69,13 @@
  '(elpy-modules
    '(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults))
  '(package-selected-packages
-   '(magit rst yaml-mode visual-fill-column markdown-mode json-mode flycheck elpy auto-complete)))
+   '(impatient-mode magit rst yaml-mode visual-fill-column markdown-mode json-mode flycheck elpy auto-complete))
+ '(warning-suppress-log-types '(((python python-shell-completion-native-turn-on-maybe)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(global-set-key (kbd "C-c m c") 'mc/edit-lines)
