@@ -1,3 +1,5 @@
+(setq mac-command-modifier 'meta)
+
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
@@ -18,7 +20,6 @@
 		      flycheck
                       json-mode
                       markdown-mode
-                      visual-fill-column
                       yaml-mode
 		      rst
 		      magit
@@ -40,7 +41,8 @@
 (add-hook 'yaml-mode-hook 'visual-line-mode)
 
 (elpy-enable)
-(setenv "WORKON_HOME" "/usr/local/Caskroom/miniconda/base/envs/")
+(setenv "WORKON_HOME" "/Users/kevinklein/micromamba/envs")
+(setq elpy-rpc-virtualenv-path "/Users/kevinklein/micromamba/envs/elpy-rpc/")
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "-i --simple-prompt")
 (setq elpy-eldoc-show-current-function nil)
@@ -67,7 +69,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(elpy-modules
-   '(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults))
+   '(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-sane-defaults))
  '(package-selected-packages
    '(impatient-mode magit rst yaml-mode visual-fill-column markdown-mode json-mode flycheck elpy auto-complete))
  '(warning-suppress-log-types '(((python python-shell-completion-native-turn-on-maybe)))))
