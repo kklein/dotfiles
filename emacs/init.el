@@ -32,6 +32,9 @@
     (package-install p))
   (add-to-list 'package-selected-packages p))
 
+(remove-hook 'text-mode-hook #'turn-on-auto-fill)
+(remove-hook 'markdown-mode-hook #'turn-on-auto-fill)
+
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'markdown-mode-hook 'outline-minor-mode)
@@ -81,3 +84,4 @@
  )
 
 (global-set-key (kbd "C-c m c") 'mc/edit-lines)
+
