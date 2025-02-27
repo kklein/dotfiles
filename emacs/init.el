@@ -89,10 +89,10 @@
 
 (global-set-key (kbd "C-c m c") 'mc/edit-lines)
 
-
 (use-package graphviz-dot-mode
   :ensure t
   :config
   (setq graphviz-dot-indent-width 4))
 
 (setq markdown-command '("pandoc" "--from=markdown" "--to=html5"))
+
