@@ -94,3 +94,5 @@
   :ensure t
   :config
   (setq graphviz-dot-indent-width 4))
+
+(setq markdown-command '("pandoc" "--from=markdown" "--to=html5"))
