@@ -24,6 +24,10 @@
 		      rst
 		      magit
 		      multiple-cursors
+		      conda
+		      rust-mode
+		      csv-mode
+		      graphviz-dot-mode
                       ))
 
 (dolist (p my-packages)
@@ -85,3 +89,8 @@
 
 (global-set-key (kbd "C-c m c") 'mc/edit-lines)
 
+
+(use-package graphviz-dot-mode
+  :ensure t
+  :config
+  (setq graphviz-dot-indent-width 4))
