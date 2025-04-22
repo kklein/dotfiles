@@ -48,8 +48,8 @@
   :init
   (elpy-enable)
   :config
-  (setenv "WORKON_HOME" "/Users/kevinklein/micromamba/envs")
-  (setq elpy-rpc-virtualenv-path "/Users/kevinklein/micromamba/envs/elpy-rpc/")
+  (setenv "WORKON_HOME" "/Users/kevin.klein/micromamba/envs")
+  (setq elpy-rpc-virtualenv-path "/Users/kevin.klein/micromamba/envs/elpy-rpc/")
   (setq python-shell-interpreter "ipython"
         python-shell-interpreter-args "-i")
   (setq elpy-eldoc-show-current-function nil)
