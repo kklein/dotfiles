@@ -12,6 +12,7 @@
 ;; Package repositories setup
 (require 'package)
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+			 ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
 (package-initialize)
 
@@ -43,26 +44,27 @@
   :config
   (ac-config-default))
 
+(use-package direnv
+ :config
+ (direnv-mode))
+
 ;; Python development with elpy
 (use-package elpy
-  :init
-  (elpy-enable)
-  :config
-  (setenv "WORKON_HOME" "/Users/kevin.klein/micromamba/envs")
-  (setq elpy-rpc-virtualenv-path "/Users/kevin.klein/micromamba/envs/elpy-rpc/")
-  (setq python-shell-interpreter "ipython"
-        python-shell-interpreter-args "-i")
-  (setq elpy-eldoc-show-current-function nil)
-  :custom
-  (elpy-modules '(elpy-module-company
-                  elpy-module-eldoc
-                  elpy-module-pyvenv
-                  elpy-module-highlight-indentation
-                  elpy-module-yasnippet
-                  elpy-module-sane-defaults)))
-
-;; Conda support
-(use-package conda)
+   :init
+   (elpy-enable)
+   :config
+   (setq python-shell-interpreter "ipython"
+         python-shell-interpreter-args "-i")
+   (setq elpy-eldoc-show-current-function nil)
+   :custom
+   (elpy-rpc-virtualenv-path 'current)
+   (elpy-modules '(elpy-module-company
+                   elpy-module-eldoc
+                   elpy-module-pyvenv
+                   elpy-module-highlight-indentation
+                   elpy-module-yasnippet
+                   elpy-module-sane-defaults))
+   (elpy-enable))
 
 ;; Syntax checking
 (use-package flycheck
@@ -88,7 +90,7 @@
 (use-package rst)
 
 ;; Git interface
-(use-package magit)
+;; (use-package magit)
 
 ;; Multiple cursors
 (use-package multiple-cursors
@@ -108,4 +110,22 @@
 ;; Web preview mode
 (use-package impatient-mode)
 
+;;(use-package gptel
+;;  :config
+;;  (setq gptel-model "ChatGPT:gpt-5"))
+
 (setq warning-suppress-log-types '(((python python-shell-completion-native-turn-on-maybe))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-export-backends '(ascii html icalendar latex md odt))
+ '(package-selected-packages
+   '(yaml-mode use-package rust-mode multiple-cursors markdown-mode magit json-mode impatient-mode flycheck elpy conda auto-complete)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
