@@ -36,3 +36,20 @@
 (setq package-enable-at-startup nil)
 
 (straight-use-package 'use-package)
+
+;; Markdown mode
+(use-package markdown-mode
+  :hook ((markdown-mode . outline-minor-mode)
+         (markdown-mode . visual-line-mode)))
+
+;; YAML mode
+(use-package yaml-mode
+  :mode "\\.yml\\'"
+  :hook (yaml-mode . visual-line-mode))
+
+;; JSON mode
+(use-package json-mode
+  :mode "\\.json\\'")
+
+;; RST mode
+(use-package rst)
