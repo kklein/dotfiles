@@ -1,3 +1,4 @@
+
 ;; Basic UI and behavior settings
 (setq mac-command-modifier 'meta)
 (setq inhibit-startup-message t)
@@ -34,8 +35,8 @@
   (load bootstrap-file nil 'nomessage))
 
 (setq package-enable-at-startup nil)
-
 (straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 ;; Markdown mode
 (use-package markdown-mode
@@ -53,3 +54,36 @@
 
 ;; RST mode
 (use-package rst)
+
+(use-package envrc
+  :hook (after-init . envrc-global-mode))
+
+;; Org mode configuration
+(use-package org
+  :config
+  (setq org-log-done 'time)
+  (setq org-todo-keywords
+        '((sequence "TODO" "PROGRESS" "|" "DONE" "ABORTED"))))
+
+(use-package gptel
+  :custom
+  ;; TODO: Currently, this is redundant. :(
+  (gptel-model 'ChatGPT:gpt-5))
+
+;; Python development with elpy
+(use-package elpy
+   :init
+   (elpy-enable)
+   :config
+   (setq python-shell-interpreter "ipython"
+         python-shell-interpreter-args "-i")
+   (setq elpy-eldoc-show-current-function nil)
+   :custom
+   (elpy-rpc-virtualenv-path 'current)
+   (elpy-modules '(elpy-module-company
+                   elpy-module-eldoc
+                   elpy-module-pyvenv
+                   elpy-module-highlight-indentation
+                   elpy-module-yasnippet
+                   elpy-module-sane-defaults))
+   (elpy-enable))
