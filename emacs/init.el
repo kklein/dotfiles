@@ -1,3 +1,15 @@
+;; Basic UI and behavior settings
+(setq mac-command-modifier 'meta)
+(setq inhibit-startup-message t)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(fset 'yes-or-no-p 'y-or-n-p)
+(global-auto-revert-mode t)
+(global-display-line-numbers-mode)
+(column-number-mode)
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name
