@@ -10,6 +10,13 @@
 (column-number-mode)
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
+(global-whitespace-mode 1)
+(setq-default show-trailing-whitespace t)
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/backup/" t)))
+(setq backup-directory-alist '(("." . "~/.emacs.d/backup/")))
+(setq create-lockfiles nil)
+
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name
