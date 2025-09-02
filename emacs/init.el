@@ -1,5 +1,5 @@
-
 ;; Basic UI and behavior settings
+
 (setq mac-command-modifier 'meta)
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1)
@@ -17,6 +17,8 @@
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup/")))
 (setq create-lockfiles nil)
 
+
+;; Package management setup via straight.el
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -38,39 +40,31 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
-;; Markdown mode
+;; Modes for various text files
+
 (use-package markdown-mode
   :hook ((markdown-mode . outline-minor-mode)
          (markdown-mode . visual-line-mode)))
 
-;; YAML mode
 (use-package yaml-mode
   :mode "\\.yml\\'"
   :hook (yaml-mode . visual-line-mode))
 
-;; JSON mode
 (use-package json-mode
   :mode "\\.json\\'")
 
-;; RST mode
 (use-package rst)
 
-(use-package envrc
-  :hook (after-init . envrc-global-mode))
-
-;; Org mode configuration
 (use-package org
   :config
   (setq org-log-done 'time)
   (setq org-todo-keywords
         '((sequence "TODO" "PROGRESS" "|" "DONE" "ABORTED"))))
 
-(use-package gptel
-  :custom
-  ;; TODO: Currently, this is redundant. :(
-  (gptel-model 'ChatGPT:gpt-5))
+;; Modes for programming languages
 
-;; Python development with elpy
+(use-package rust-mode)
+
 (use-package elpy
    :init
    (elpy-enable)
@@ -87,3 +81,16 @@
                    elpy-module-yasnippet
                    elpy-module-sane-defaults))
    (elpy-enable))
+
+(use-package flyspell
+  :hook (text-mode . flyspell-mode))
+
+;; Miscellaneous
+
+(use-package envrc
+  :hook (after-init . envrc-global-mode))
+
+(use-package gptel
+  :custom
+  ;; TODO: Currently, this is redundant. :(
+  (gptel-model 'ChatGPT:gpt-5))
