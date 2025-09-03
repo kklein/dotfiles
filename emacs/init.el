@@ -93,4 +93,4 @@
 (use-package gptel
   :custom
   ;; TODO: Currently, this is redundant. :(
-  (gptel-model 'ChatGPT:gpt-5))
+  (gptel-model 'gpt-5))
