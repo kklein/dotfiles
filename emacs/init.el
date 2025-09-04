@@ -17,7 +17,6 @@
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup/")))
 (setq create-lockfiles nil)
 
-
 ;; Package management setup via straight.el
 
 (defvar bootstrap-version)
@@ -63,23 +62,6 @@
 
 ;; Modes for programming languages
 
-;; (use-package elpy
-;;    :init
-;;    (elpy-enable)
-;;    :config
-;;    (setq python-shell-interpreter "ipython"
-;;          python-shell-interpreter-args "-i")
-;;    (setq elpy-eldoc-show-current-function nil)
-;;    :custom
-;;    (elpy-rpc-virtualenv-path 'current)
-;;    (elpy-modules '(elpy-module-company
-;;                    elpy-module-eldoc
-;;                    elpy-module-pyvenv
-;;                    elpy-module-highlight-indentation
-;;                    elpy-module-yasnippet
-;;                    elpy-module-sane-defaults))
-;;    (elpy-enable))
-
 (use-package rust-mode)
 
 (use-package lsp-mode
@@ -94,10 +76,16 @@
 
 ;; Miscellaneous
 
+(use-package flyspell
+  :hook (text-mode . flyspell-mode)
+  :config
+  (setq ispell-program-name "/opt/homebrew/bin/hunspell")
+  (setq ispell-really-hunspell t)
+  (setq ispell-dictionary "english"))
+
 (use-package envrc
   :hook (after-init . envrc-global-mode))
 
 (use-package gptel
   :custom
-  ;; TODO: Currently, this is redundant. :(
   (gptel-model 'gpt-5))
