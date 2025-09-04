@@ -63,27 +63,34 @@
 
 ;; Modes for programming languages
 
+;; (use-package elpy
+;;    :init
+;;    (elpy-enable)
+;;    :config
+;;    (setq python-shell-interpreter "ipython"
+;;          python-shell-interpreter-args "-i")
+;;    (setq elpy-eldoc-show-current-function nil)
+;;    :custom
+;;    (elpy-rpc-virtualenv-path 'current)
+;;    (elpy-modules '(elpy-module-company
+;;                    elpy-module-eldoc
+;;                    elpy-module-pyvenv
+;;                    elpy-module-highlight-indentation
+;;                    elpy-module-yasnippet
+;;                    elpy-module-sane-defaults))
+;;    (elpy-enable))
+
 (use-package rust-mode)
 
-(use-package elpy
-   :init
-   (elpy-enable)
-   :config
-   (setq python-shell-interpreter "ipython"
-         python-shell-interpreter-args "-i")
-   (setq elpy-eldoc-show-current-function nil)
-   :custom
-   (elpy-rpc-virtualenv-path 'current)
-   (elpy-modules '(elpy-module-company
-                   elpy-module-eldoc
-                   elpy-module-pyvenv
-                   elpy-module-highlight-indentation
-                   elpy-module-yasnippet
-                   elpy-module-sane-defaults))
-   (elpy-enable))
+(use-package lsp-mode
+  :hook (python-mode . lsp-deferred)
+  :commands lsp-deferred
+  :custom
+  (lsp-headerline-breadcrumb-enable nil)) ; optional minimalism
 
-(use-package flyspell
-  :hook (text-mode . flyspell-mode))
+(use-package lsp-pyright
+  :after lsp-mode
+  :hook (python-mode . (lambda () (require 'lsp-pyright))))
 
 ;; Miscellaneous
 
