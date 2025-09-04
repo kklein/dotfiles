@@ -13,9 +13,13 @@
 
 (global-whitespace-mode 1)
 (setq-default show-trailing-whitespace t)
+; This is just a hack to avoid overbearing visualization for long lines.
+(setq whitespace-line-column 100000)
+
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/backup/" t)))
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup/")))
 (setq create-lockfiles nil)
+
 
 ;; Package management setup via straight.el
 
