@@ -13,7 +13,7 @@
 
 (global-whitespace-mode 1)
 (setq-default show-trailing-whitespace t)
-; This is just a hack to avoid overbearing visualization for long lines.
+;; This is just a hack to avoid overbearing visualization for long lines.
 (setq whitespace-line-column 100000)
 
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/backup/" t)))
@@ -67,7 +67,7 @@
 ;; Modes for programming languages
 
 (use-package rust-mode
-  :ensure t
+
   :config
   (add-hook 'rust-mode-hook
             (lambda () (setq indent-tabs-mode nil)))
