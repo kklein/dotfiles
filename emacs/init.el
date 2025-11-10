@@ -66,7 +66,19 @@
 
 ;; Modes for programming languages
 
-(use-package rust-mode)
+(use-package rust-mode
+  :ensure t
+  :config
+  (add-hook 'rust-mode-hook
+            (lambda () (setq indent-tabs-mode nil)))
+  (setq rust-format-on-save t)
+  (define-key rust-mode-map (kbd "C-c C-c") 'rust-run)
+  (setq error_stack-regexps
+    '("\\(?:at\\|',\\) \\(\\([^:\s]+\\):\\([0-9]+\\)\\)"
+      2 3 nil nil 1))
+  (setf (cdr (assoc 'cargo compilation-error-regexp-alist-alist))
+        error_stack-regexps)
+  )
 
 (use-package lsp-mode
   :hook (python-mode . lsp-deferred)
