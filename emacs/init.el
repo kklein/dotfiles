@@ -58,6 +58,10 @@
 
 (use-package rst)
 
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
+
 (use-package org
   :config
   (setq org-log-done 'time)
@@ -105,3 +109,6 @@
 (use-package gptel
   :custom
   (gptel-model 'gpt-5))
+
+(with-eval-after-load 'lsp-mode
+  (add-to-list 'lsp-file-watch-ignored-directories "/\\.pixi\\'"))
