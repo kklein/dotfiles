@@ -1,4 +1,5 @@
 ;; Basic UI and behavior settings
+
 (setq mac-command-modifier 'meta)
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1)
@@ -8,124 +9,106 @@
 (global-auto-revert-mode t)
 (global-display-line-numbers-mode)
 (column-number-mode)
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
-;; Package repositories setup
-(require 'package)
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-			 ("melpa-stable" . "https://stable.melpa.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")))
-(package-initialize)
+(global-whitespace-mode 1)
+(setq-default show-trailing-whitespace t)
+;; This is just a hack to avoid overbearing visualization for long lines.
+(setq whitespace-line-column 100000)
 
-;; Setup use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(eval-when-compile
-  (require 'use-package))
-(setq use-package-always-ensure t)  ;; Always ensure packages are installed
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/backup/" t)))
+(setq backup-directory-alist '(("." . "~/.emacs.d/backup/")))
+(setq create-lockfiles nil)
 
-;; General editor settings
-(use-package emacs
-  :ensure nil  ;; 'emacs' is a built-in package
-  :config
-  (setq-default show-trailing-whitespace t)
-  (setq-default indicate-empty-lines t)
-  (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/backup/" t)))
-  (setq backup-directory-alist '(("." . "~/.emacs.d/backup/")))
-  (setq create-lockfiles nil)
-  (remove-hook 'text-mode-hook #'turn-on-auto-fill))
 
-;; Text modes and spell checking
-(use-package flyspell
-  :hook (text-mode . flyspell-mode))
+;; Package management setup via straight.el
 
-;; Auto-complete
-(use-package auto-complete
-  :config
-  (ac-config-default))
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(use-package direnv
- :config
- (direnv-mode))
+(setq package-enable-at-startup nil)
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
-;; Python development with elpy
-(use-package elpy
-   :init
-   (elpy-enable)
-   :config
-   (setq python-shell-interpreter "ipython"
-         python-shell-interpreter-args "-i")
-   (setq elpy-eldoc-show-current-function nil)
-   :custom
-   (elpy-rpc-virtualenv-path 'current)
-   (elpy-modules '(elpy-module-company
-                   elpy-module-eldoc
-                   elpy-module-pyvenv
-                   elpy-module-highlight-indentation
-                   elpy-module-yasnippet
-                   elpy-module-sane-defaults))
-   (elpy-enable))
+;; Modes for various text files
 
-;; Syntax checking
-(use-package flycheck
-  :init
-  (global-flycheck-mode)
-  :config
-  (setq-default flycheck-disabled-checkers '(python-pylint)))
-
-;; Markdown mode
 (use-package markdown-mode
   :hook ((markdown-mode . outline-minor-mode)
          (markdown-mode . visual-line-mode)))
 
-;; YAML mode
 (use-package yaml-mode
   :mode "\\.yml\\'"
   :hook (yaml-mode . visual-line-mode))
 
-;; JSON mode
-(use-package json-mode)
+(use-package json-mode
+  :mode "\\.json\\'")
 
-;; RST mode
 (use-package rst)
 
-;; Git interface
-;; (use-package magit)
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
 
-;; Multiple cursors
-(use-package multiple-cursors
-  :bind (("C-c m c" . mc/edit-lines)))
-
-;; Rust mode
-(use-package rust-mode)
-
-;; Org mode configuration
 (use-package org
-  :ensure nil  ;; org is built-in
   :config
   (setq org-log-done 'time)
   (setq org-todo-keywords
         '((sequence "TODO" "PROGRESS" "|" "DONE" "ABORTED"))))
 
-;; Web preview mode
-(use-package impatient-mode)
+;; Modes for programming languages
 
-;;(use-package gptel
-;;  :config
-;;  (setq gptel-model "ChatGPT:gpt-5"))
+(use-package rust-mode
 
-(setq warning-suppress-log-types '(((python python-shell-completion-native-turn-on-maybe))))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-export-backends '(ascii html icalendar latex md odt))
- '(package-selected-packages
-   '(yaml-mode use-package rust-mode multiple-cursors markdown-mode magit json-mode impatient-mode flycheck elpy conda auto-complete)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+  :config
+  (add-hook 'rust-mode-hook
+            (lambda () (setq indent-tabs-mode nil)))
+  (setq rust-format-on-save t)
+  (define-key rust-mode-map (kbd "C-c C-c") 'rust-run)
+  (setq error_stack-regexps
+    '("\\(?:at\\|',\\) \\(\\([^:\s]+\\):\\([0-9]+\\)\\)"
+      2 3 nil nil 1))
+  (setf (cdr (assoc 'cargo compilation-error-regexp-alist-alist))
+        error_stack-regexps)
+  )
+
+(use-package lsp-mode
+  :hook (python-mode . lsp-deferred)
+  :commands lsp-deferred
+  :custom
+  (lsp-headerline-breadcrumb-enable nil)) ; optional minimalism
+
+(use-package lsp-pyright
+  :after lsp-mode
+  :hook (python-mode . (lambda () (require 'lsp-pyright))))
+
+;; Miscellaneous
+
+(use-package flyspell
+  :hook (text-mode . flyspell-mode)
+  :config
+  (setq ispell-program-name "/opt/homebrew/bin/hunspell")
+  (setq ispell-really-hunspell t)
+  (setq ispell-dictionary "english"))
+
+(use-package envrc
+  :hook (after-init . envrc-global-mode))
+
+(use-package gptel
+  :custom
+  (gptel-model 'gpt-5))
+
+(with-eval-after-load 'lsp-mode
+  (add-to-list 'lsp-file-watch-ignored-directories "/\\.pixi\\'"))

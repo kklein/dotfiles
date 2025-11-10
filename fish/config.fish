@@ -1,17 +1,9 @@
-# Start X at login
-if status is-login
-    if test -z "$DISPLAY" -a $XDG_VTNR = 1
-        exec startx -- -keeptty
-    end
-end
+/opt/homebrew/bin/brew shellenv | source
 
-# Run ssh_agent. This allows for the storage of keys
-# for ssh profies.
-# https://github.com/ivakyb/fish_ssh_agent
-fish_ssh_agent
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-# eval /opt/miniconda3/bin/conda "shell.fish" "hook" $argv | source
-# <<< conda initialize <<<
-
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'micromamba shell init' !!
+set -gx MAMBA_EXE "/opt/homebrew/bin/micromamba"
+set -gx MAMBA_ROOT_PREFIX "/Users/kevin.klein/.local/share/mamba"
+$MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
+# <<< mamba initialize <<<
