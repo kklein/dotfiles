@@ -54,7 +54,9 @@
   :hook (yaml-mode . visual-line-mode))
 
 (use-package json-mode
-  :mode "\\.json\\'")
+  :mode "\\.json\\'"
+  :config
+  (setq js-indent-level 2))
 
 (use-package rst)
 
@@ -84,6 +86,45 @@
         error_stack-regexps)
   )
 
+;; install required inheritenv dependency:
+(use-package inheritenv
+  :straight (:type git :host github :repo "purcell/inheritenv"))
+
+;; for eat terminal backend:
+(use-package eat
+  :straight (:type git
+                   :host codeberg
+                   :repo "akib/emacs-eat"
+                   :files ("*.el" ("term" "term/*.el") "*.texi"
+                           "*.ti" ("terminfo/e" "terminfo/e/*")
+                           ("terminfo/65" "terminfo/65/*")
+                           ("integration" "integration/*")
+                           (:exclude ".dir-locals.el" "*-tests.el"))))
+
+(use-package monet
+  :straight (:type git :host github :repo "stevemolitor/monet"))
+
+;; install claude-code.el, using :depth 1 to reduce download size:
+(use-package claude-code
+  :straight (:type git :host github :repo "stevemolitor/claude-code.el" :branch "main" :depth 1
+                   :files ("*.el" (:exclude "images/*")))
+  :bind-keymap
+  ("C-c c" . claude-code-command-map) ;; or your preferred key
+  ;; Optionally define a repeat map so that "M" will cycle thru Claude auto-accept/plan/confirm modes after invoking claude-code-cycle-mode / C-c M.
+  :bind
+  (:repeat-map my-claude-code-map ("M" . claude-code-cycle-mode))
+  :config
+  ;; optional IDE integration with Monet
+  (add-hook 'claude-code-process-environment-functions #'monet-start-server-function)
+  (monet-mode 1)
+
+  (claude-code-mode))
+
+(use-package magit
+  :straight t
+  :defer t
+  :bind (("C-x g" . magit-status)))
+
 (use-package lsp-mode
   :hook (python-mode . lsp-deferred)
   :commands lsp-deferred
@@ -105,10 +146,6 @@
 
 (use-package envrc
   :hook (after-init . envrc-global-mode))
-
-(use-package gptel
-  :custom
-  (gptel-model 'gpt-5))
 
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "/\\.pixi\\'"))
