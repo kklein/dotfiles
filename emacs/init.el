@@ -100,6 +100,11 @@
                            ("integration" "integration/*")
                            (:exclude ".dir-locals.el" "*-tests.el"))))
 
+(add-hook 'eat-mode-hook
+          (lambda ()
+            (setq show-trailing-whitespace nil)
+            (whitespace-mode -1)))
+
 (use-package monet
   :straight (:type git :host github :repo "stevemolitor/monet"))
 
