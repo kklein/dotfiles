@@ -6,7 +6,7 @@
     "AWS_CONFIG_FILE": "/Users/kevin.klein/.claude/aws.config",
     "AWS_PROFILE": "qcaws",
     "AWS_REGION": "eu-central-1",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "eu.anthropic.claude-opus-4-6-v1[1m]",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "eu.anthropic.claude-opus-4-8",
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "eu.anthropic.claude-sonnet-4-6[1m]",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "eu.anthropic.claude-haiku-4-5-20251001-v1:0"
   },
@@ -19,7 +19,11 @@
       "mcp__ide__getDiagnostics"
     ]
   },
-  "model": "eu.anthropic.claude-opus-4-6-v1[1m]",
+  "model": "eu.anthropic.claude-opus-5",
+  "enabledPlugins": {
+    "pyright-lsp@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true
+  },
   "sandbox": {
     "enabled": true,
     "autoAllowBashIfSandboxed": true,
@@ -28,7 +32,8 @@
       "allowedDomains": [
         "github.com",
         "api.github.com",
-        "raw.githubusercontent.com"
+        "raw.githubusercontent.com",
+        "api.transferwise.com"
       ],
       "allowLocalBinding": true
     },
@@ -45,8 +50,5 @@
       "pixi install"
     ]
   },
-  "effortLevel": "high",
-  "enabledPlugins": {
-    "pyright-lsp@claude-plugins-official": true
-  }
+  "effortLevel": "high"
 }
