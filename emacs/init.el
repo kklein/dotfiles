@@ -3,6 +3,7 @@
 (setq mac-command-modifier 'meta)
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1)
+(mouse-wheel-mode 0)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (fset 'yes-or-no-p 'y-or-n-p)
