@@ -53,12 +53,18 @@
   :mode "\\.yml\\'"
   :hook (yaml-mode . visual-line-mode))
 
+(use-package typescript-mode
+  :mode "\\.ts\\'")
+
 (use-package json-mode
   :mode "\\.json\\'"
   :config
   (setq js-indent-level 2))
 
 (use-package rst)
+
+(use-package csv-mode
+  :mode "\\.csv\\'")
 
 (use-package yasnippet
   :config
